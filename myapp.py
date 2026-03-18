@@ -2,6 +2,7 @@ import random
 import string
 import time
 
+
 def app(environ, start_response):
     print("Received request:"
           f"\nMethod: {environ['REQUEST_METHOD']}"

@@ -1,0 +1,4 @@
+ab -c 1000 -t 4 http://localhost:8080/                  // nginx /          fail 
+ab -c 300 -t 5 http://localhost:8080/gunicorn           // nginx /gunicorn  fail
+ab -c 400 -t 70 http://localhost:8080/public/zavod.png  // nginx /public    fail
+ab -c 11000 -t 4 http://localhost:8000/                 // python server    fail
