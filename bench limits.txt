@@ -1,4 +1,4 @@
-ab -c 250 -t 4 http://localhost:8080/      // rps ~32000
-http://localhost:8080/gunicorn/            // rps ~73
-http://localhost:8080/public/zavod.png/    // rps ~9800
-ab -c 4 -t 10 http://localhost:8000/       // max rps ~74 (+7.4 = 81.4 will fail) 
+ab -c 250 -t 4 http://localhost:8080/                   // rps ~32000
+ab -c 120 -t 10 -d -r http://localhost:8080/gunicorn/   // rps ~73
+http://localhost:8080/public/zavod.png/                 // rps ~9800
+ab -c 130 -t 10 http://localhost:8000/                  // max rps ~74 (+7.4 = 81.4 will fail)  

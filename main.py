@@ -1,32 +1,33 @@
-import random
-import string
-import time
+from cache import LRUCache
 
-def app(environ, start_response):
-    print("Received request:"
-          f"\nMethod: {environ['REQUEST_METHOD']}"
-          f"\nPath: {environ['PATH_INFO']}"
-          f"\nUser Agent: {environ['HTTP_USER_AGENT']}")
+def test_lru_cache():
+    cache = LRUCache(capacity=2)
+    
+    # Test set and get
+    cache.set("a", "1")
+    assert cache.get("a") == "1", "Failed to get value"
+    
+    # Test capacity limit
+    cache.set("b", "2")
+    cache.set("c", "3")
+    assert cache.get("a") == -1, "LRU item should be evicted"
+    assert cache.get("b") == "2", "Should retrieve b"
+    assert cache.get("c") == "3", "Should retrieve c"
+    
+    # Test get moves item to end
+    cache.set("d", "4")
+    assert cache.get("b") == -1, "b should be evicted"
+    assert cache.get("c") == "3", "c should still exist"
+    
+    # Test rem
+    cache.rem("c")
+    assert cache.get("c") == -1, "Removed key should not exist"
+    
+    # Test update existing key
+    cache.set("d", "5")
+    assert cache.get("d") == "5", "Updated value should be retrieved"
+    
+    print("All tests passed!")
 
-    length = random.randint(8, 16)
-    required_symbols = "#.,!@&^%*"
-
-    password_chars = [
-        random.choice(string.digits),
-        random.choice(string.ascii_lowercase),
-        random.choice(string.ascii_uppercase),
-        random.choice(required_symbols),
-    ]
-
-    all_allowed_chars = string.digits + string.ascii_lowercase + string.ascii_uppercase + required_symbols
-    password_chars.extend(random.choice(all_allowed_chars) for _ in range(length - len(password_chars)))
-    random.shuffle(password_chars)
-
-    password = "".join(password_chars).encode("utf-8")
-    time.sleep(0.05)
-
-    start_response("200 OK", [
-        ("Content-Type", "text/plain"),
-        ("Content-Length", str(len(password)))
-    ])
-    return iter([password])
+if __name__ == "__main__":
+    test_lru_cache()

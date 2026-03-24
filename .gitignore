@@ -12,7 +12,7 @@ var/
 wheels/
 share/python-wheels/
 
-**/.venv/
+.venv/
 
 .vscode/
 .DS_Store

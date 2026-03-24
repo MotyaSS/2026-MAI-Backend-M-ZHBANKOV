@@ -5,8 +5,6 @@ import time
 
 def app(environ, start_response):
     print("Received request:"
-          f"\nMethod: {environ['REQUEST_METHOD']}"
-          f"\nPath: {environ['PATH_INFO']}"
           f"\nUser Agent: {environ['HTTP_USER_AGENT']}")
 
     length = random.randint(8, 16)
